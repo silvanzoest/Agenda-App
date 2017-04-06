@@ -42,3 +42,41 @@ Op het moment heeft deze dictionary de volgende velden:
   - "alert": boolean die aangeeft of een melding voor deze afspraak moet worden getoond
   - "alert_moments": list van integers die tijden aangeven wanneer alerts moeten worden getoond. Tijden worden berekend door 'from - int'
   - "attachments": list van strings die een path zijn naar een bijlage.
+  
+### Instellingen
+Alle instellingen zijn opgeslagen in een dictionary 'settings' in de communicatie/core.
+De huidige instellingen zijn:
+  - "language": Taal 
+  - "appointment_decay_limit": Maximale tijd waarvoor een verlopen/afgelopen afspraak bewaard wordt.
+  - "trash_timeout": Maximale tijd waarvoor een afpraak in de prullenbak bewaard wordt.
+  
+  
+ ### Communicatie GUI en backend
+ De GUI en de backend zijn gescheiden door een 'black box'. Deze black box heeft functies zodat de GUI en de 
+ backend met elkaar kunnen communiceren. De API die ondersteund wordt is:
+   - core.api.dispatch(func_name: str, args, kwargs) -> typing.Any
+      Call een geregistreerde functie met naam 'func_name'. args and kwargs zijn de argumenten voor deze functie.
+   - core.api.set_var(name: str, value: typing.Any) -> None
+      Maak een global variable of verander de waarde van een global variable.
+   - core.api.get_var(name: str) -> typing.Any
+      Vraag de waarde van een global variable op. De return waarde is een weakref.proxy naar het originele object.
+   - core.register(\*\*kwargs) -> None
+      Registreer een functie voor gebruik voor de dispatch functie. De naam waaronder de functie geregistreerd wordt
+      is de naam die gebruik is voor het keyword-argument.
+   - core.register(obj: types.FunctionType) -> types.FunctionType
+      Registreer een functie voor gebruik voor de dispatch functie. De naam waaronder de functie geregistreerd wordt 
+      is de naam van de functie (obj.__name__)
+   - core.register(obj: type) -> type
+      Registreer een class voor gebruik voor de dispatch functie. De naam waaronder de class geregistreerd wordt 
+      is de naam van de class (obj.__name__)
+   - core.register_class(cls: type, register: int) -> None
+      register de verschillende onderdelen van een class. De delen van de class die geregistreerd moeten kunnen
+      worden zijn:
+        - De class zelf
+        - class methods
+        - static methods
+        - class methods 
+        - class  variables
+      Welk delen precies geregistreerd worden kan worden bepaald met het register argument en bitflags.
+   - [global variable via get_var]: DATA_FILE: pathlib.Path object met pad naar bestand met afspraken
+   - [global variable via get_var]: CONFIG_FILE: pathlib.Path object met pad naar configuratiebestand 
