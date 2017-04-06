@@ -28,9 +28,9 @@ Navigeer naar het goede bestand en klik op "raw". Kopieer de tekst en plak het i
 ### Opslag afspraken
 Alle afspraken zijn opgeslagen in een global variable in de communiatie/core, onder de naam 'appointments'.
 Dit is een dictionary waarin de keys de UUID (unieke identifier) van een afspraak is.
-De value die bij de key hoort is een dictionary met de data van de afspraak. 
+ De value die bij de key hoort is een dictionary met de data van de afspraak. 
 Op het moment heeft deze dictionary de volgende velden:
-  - title: "String met titel van de afspraak"
+   - title: "String met titel van de afspraak"
   - "description": "String met een omschrijving van de afspraak"
   - "where": "locatie"
   - "from": int die aangeeft wanneer de afspraak begint (zie Unix timestam en datetime.fromtimestamp)
@@ -54,22 +54,22 @@ De huidige instellingen zijn:
  ### Communicatie GUI en backend
  De GUI en de backend zijn gescheiden door een 'black box'. Deze black box heeft functies zodat de GUI en de 
  backend met elkaar kunnen communiceren. De API die ondersteund wordt is:
-   - core.api.dispatch(func_name: str, args, kwargs) -> typing.Any
+   - **core.api.dispatch(func_name: str, args, kwargs) -> typing.Any**:
       Call een geregistreerde functie met naam 'func_name'. args and kwargs zijn de argumenten voor deze functie.
-   - core.api.set_var(name: str, value: typing.Any) -> None
+   - **core.api.set_var(name: str, value: typing.Any) -> None**:
       Maak een global variable of verander de waarde van een global variable.
-   - core.api.get_var(name: str) -> typing.Any
+   - **core.api.get_var(name: str) -> typing.Any**:
       Vraag de waarde van een global variable op. De return waarde is een weakref.proxy naar het originele object.
-   - core.register(\*\*kwargs) -> None
+   - **core.register(\*\*kwargs) -> None**:
       Registreer een functie voor gebruik voor de dispatch functie. De naam waaronder de functie geregistreerd wordt
       is de naam die gebruik is voor het keyword-argument.
-   - core.register(obj: types.FunctionType) -> types.FunctionType
+   - **core.register(obj: types.FunctionType) -> types.FunctionType**: 
       Registreer een functie voor gebruik voor de dispatch functie. De naam waaronder de functie geregistreerd wordt 
-      is de naam van de functie (obj.__name__)
-   - core.register(obj: type) -> type
+      is de naam van de functie (obj.\__name\__)
+   - **core.register(obj: type) -> type**:
       Registreer een class voor gebruik voor de dispatch functie. De naam waaronder de class geregistreerd wordt 
-      is de naam van de class (obj.__name__)
-   - core.register_class(cls: type, register: int) -> None
+      is de naam van de class (obj.\__name\__)
+   - **core.register_class(cls: type, register: int) -> None**: 
       register de verschillende onderdelen van een class. De delen van de class die geregistreerd moeten kunnen
       worden zijn:
         - De class zelf
@@ -78,5 +78,5 @@ De huidige instellingen zijn:
         - class methods 
         - class  variables
       Welk delen precies geregistreerd worden kan worden bepaald met het register argument en bitflags.
-   - [global variable via get_var]: DATA_FILE: pathlib.Path object met pad naar bestand met afspraken
-   - [global variable via get_var]: CONFIG_FILE: pathlib.Path object met pad naar configuratiebestand 
+   - **[global variable via get_var]: DATA_FILE**: pathlib.Path object met pad naar bestand met afspraken
+   - **[global variable via get_var]: CONFIG_FILE**: pathlib.Path object met pad naar configuratiebestand 
