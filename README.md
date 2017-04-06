@@ -30,7 +30,7 @@ Alle afspraken zijn opgeslagen in een global variable in de communiatie/core, on
 Dit is een dictionary waarin de keys de UUID (unieke identifier) van een afspraak is.
  De value die bij de key hoort is een dictionary met de data van de afspraak. 
 Op het moment heeft deze dictionary de volgende velden:
-   - title: "String met titel van de afspraak"
+  - title: "String met titel van de afspraak"
   - "description": "String met een omschrijving van de afspraak"
   - "where": "locatie"
   - "from": int die aangeeft wanneer de afspraak begint (zie Unix timestam en datetime.fromtimestamp)
@@ -51,7 +51,7 @@ De huidige instellingen zijn:
   - "trash_timeout": Maximale tijd waarvoor een afpraak in de prullenbak bewaard wordt.
   
   
- ### Communicatie GUI en backend
+a ### Communicatie GUI en backend
  De GUI en de backend zijn gescheiden door een 'black box'. Deze black box heeft functies zodat de GUI en de 
  backend met elkaar kunnen communiceren. De API die ondersteund wordt is:
    - **core.api.dispatch(func_name: str, args, kwargs) -> typing.Any**:
@@ -80,3 +80,46 @@ De huidige instellingen zijn:
       Welk delen precies geregistreerd worden kan worden bepaald met het register argument en bitflags.
    - **[global variable via get_var]: DATA_FILE**: pathlib.Path object met pad naar bestand met afspraken
    - **[global variable via get_var]: CONFIG_FILE**: pathlib.Path object met pad naar configuratiebestand 
+   
+ ### Opslaan en laden van bestanden
+ Voor het laden en opslaan van de afspraken en instellingen is de volgende api beschikbaar:
+  - **filesystem.load(path: pathlib.Path) -> dict[str: dict]**: Laad afspraken uit bestand 'path'. De functie moet ook controleren
+  dat alle afspraken compatibel zijn met de huidige API door middel van de compat-API. Afspraken die niet compatibel zijn moeten
+  met behulp van dezelfde API worden aangepast. Als alle afspraken zijn aangepast EN er tenminste EEN afspraak is aangpast,
+  moeten alle afspraken eerste opnieuw opgeslagen worden.
+  - **filesystem.save(path: pathlib.Path, data: dict[str: dict]) -> None**: Sla afspraken 'data' op in bestand 'path'.
+  - **filesystem.load_config(path: pathlib.Path) -> dict[str: typing.Any]**: Laad instellingen uit bestand 'path'.
+  - **filesystem.save_config(path: pathlib.Path, settings: dict[str: typing.Any) -> None**: Sla dictionary 'settings' op in bestand 'path'.
+  - **[global variable via get_var]: file_format**: Global variable die aangeeft welk bestandsformaat moet worden gebruikt voor 
+  het bestand met afspraken.
+  - **[global variable via get_var]: config_file_format**: Global variable die aangeeft welk bestandsformaat moet worden
+  gebruikt voor het configuratiebestand
+  
+  De bestandformaten die ondersteund moeten worden zijn:
+  - json
+  - xml
+  - pickle 
+  
+  Voor het configuratie dient ook nog .properties ondersteund te worden.
+  
+### Algemene functies voor afspraken
+De algemene functies voor het werken met afspraken zijn:
+  - **appointments.get_appointments(sort_by=date, include_trash=False) -> typing.Iterator[str, dict]**: Iterator over alle afspraken 
+  als (UUID, data) tuples. Als `include_trash` `True` is moeten ook items uit de prullenbak ge-yield te worden, anders niet. 
+  Dit kan door de API van de prullenbak te gebruiken. De afspraken worden op gesorteerde volgorde ge-yield; sort_by geeft aan
+  op welke manier. Zie voor meer informatie het kopje 'sorteren'
+  - **appointments.add_appointment(data: Dict) -> str**: Voeg een afspraak toe aan de lijst met afspraken en genereer een UUID
+  voor deze afspraak. Alle afspraken moeten opnieuw opgeslagen worden met behulp van de filesystem API.
+  - **appointments.remove_appointment(uuid: str) -> typing.Union[str, None]**: Verwijder de afspraak met het gegeven UUID uit het 
+  systeem; De lijst met afspraken dient opnieuw opgeslagen te worden. Als de afspraak opnieuw opgeslagen moet worden (zie kopje 'opslag
+  afspraken') moet deze functie de relevante velden aanpassen, de afspraak opnieuw toevoegen en het nieuwe UUID returnen. 
+  De return-waarde is anders `None`.
+  - **appointments.update_appointments(uuid: str, data: dict) -> None**: Wijzig de gegeven afspraak door de corresponderende afspraak
+  in de dict met afspraken te vervangen. De dictionary moet hierna opnieuw opgeslagen worden.
+  - **appointments.get_old_appointments(sort_by=date, expiration_time: datetime.timedelta=one_week, include_trash=False) -> typing.Iterator[str, dict]**: Iterator over alle verlopen afspraken die minimaal `expiration_time` lang zijn verlopen, als 
+  (UUID, data) tuples. Als `include_trash` `True` is moeten afspraken uit de prullenbak ook ge-yield worden. De afspraken worden op
+  gesorteerde volgorde ge-yield; sort_by geeft aan op welke manier. Zie voor meer informatie het kopje 'sorteren'.
+  - **appointments.clean_old_appointments(expiration_time: datetime.timedelta=one_week, include_trash=False) -> None**: Verwijder alle
+  afspraken die al minimaal `expiration_time` lang zijn verlopen. Als `include_trash` `True` is moeten ook afspraken uit de 
+  prullenbak worden verwijderd.
+  
