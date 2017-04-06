@@ -42,6 +42,8 @@ Op het moment heeft deze dictionary de volgende velden:
   - "alert": boolean die aangeeft of een melding voor deze afspraak moet worden getoond
   - "alert_moments": list van integers die tijden aangeven wanneer alerts moeten worden getoond. Tijden worden berekend door 'from - int'
   - "attachments": list van strings die een path zijn naar een bijlage.
+  - "in_trash": bool die aangeeft of deze afspraak momenteel in de prullenbak zit.
+  - "moved_to_trash": int die aangeeft wanneer de afspraak naar de prullenbak is verplaatst. Is gelijk aan -1 als "in_trash == False"
   
 ### Instellingen
 Alle instellingen zijn opgeslagen in een dictionary 'settings' in de communicatie/core.
@@ -122,4 +124,38 @@ De algemene functies voor het werken met afspraken zijn:
   - **appointments.clean_old_appointments(expiration_time: datetime.timedelta=one_week, include_trash=False) -> None**: Verwijder alle
   afspraken die al minimaal `expiration_time` lang zijn verlopen. Als `include_trash` `True` is moeten ook afspraken uit de 
   prullenbak worden verwijderd.
+  
+### Prullenbak
+De prullenbak API bestaat uit de volgende functies:
+  - **trash.get_trash_items(sort_by=date_moved_to_trash) -> Iterator[str, dict]**: Iterator over alle afspraken in de prullenbak als 
+  als (UUID, data) tuples. `sort_by` geeft aan hoe de afspraken van te voren gesorteerd moeten worden. Zie voor meer informatie het kopje
+  'sorteren'
+  - **trash.clear_trash(expiration_time: datetime.timedelta=passed) -> None**: Verwijder alle afspraken die al `expiration_time` lang in 
+  de prullenbak zitten. Als `expiration_time == -1` moeten alle afspraken die al geweest/verlopen zijn worden verwijderd.
+  - **move_to_trash(uuid: str) -> None**: Verplaats een afspraak naar de prullenbak. Zet de globale variable `trash_history_id` gelijk
+  aan het gegeven uuid.
+  - **move_from_trash(uuid: str) -> None**: Haal een afspraak uit de prullenbak. Als de gegeven uuid gelijk is aan `trash_history_id`,
+  moet deze globale variable naar `None` worden gezet.
+  - **[global variable via get_var]: trash_id: typing.Union[str, None]**: global variable met de uuid van de afspraak die
+  als laatste naar de prullenbak is verplaatst.
+  
+### Compatibiliteit
+De volgende functies helpen om afspraken van een oudere versie van de app te laten werken op een nieuwere versie:
+  - **compat.validate_appointment(data: dict) -> bool**: return `True` als de gegeven dictionary in overeenstemming is met 
+  de onder het kopje 'opslag afspraken' beschreven layout van een afspraak. return `False` als dit niet het geval is.
+  - **compat.convert_appointment(data: dict) -> dict**: Pas de gegeven dictionary aan zodat deze in overeenstemming is 
+  met de onder het kopje 'opslag afspraken' layout voor afspraken. Pas de gegeven dictionary **zelf** niet aan, maar maak een kopie.
+  
+### Utility
+Dit is een module met een aantal willekeurige functies:
+  - **util.save_appiontment(appointment: dict) -> None**: Sla een willekeurige afspraak op met de filesystem API
+  - **util.save_config_var(name, value) -> None**: Sla de waarde van een instelling op met de filesystem API.
+  
+### Sorteren
+De volgende vormen van sorteren moeten worden ondersteund:
+  - by_date: Op volgorde van datum, oplopend
+  - by_date_reversed: Op volgorde van datum, maar dan omgekeerd
+  - [LET OP: hoeft _nog_ niet] importance; belangrijkheid
+  - [Alleen voor de prullenbak]: date_moved_to_trash: Op volgorde van wanneer de afspraken naar de prullenbak zijn verplaatst.
+  - [Alleen voor de prullenbak]: data_moved_to_trash_reversed: date_moved_to_trash maar dan omgekeerd.
   
