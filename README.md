@@ -51,7 +51,7 @@ De huidige instellingen zijn:
   - "trash_timeout": Maximale tijd waarvoor een afpraak in de prullenbak bewaard wordt.
   
   
-a ### Communicatie GUI en backend
+ ### Communicatie GUI en backend
  De GUI en de backend zijn gescheiden door een 'black box'. Deze black box heeft functies zodat de GUI en de 
  backend met elkaar kunnen communiceren. De API die ondersteund wordt is:
    - **core.api.dispatch(func_name: str, args, kwargs) -> typing.Any**:
