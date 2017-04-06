@@ -86,7 +86,7 @@ De huidige instellingen zijn:
  ### Opslaan en laden van bestanden
  Voor het laden en opslaan van de afspraken en instellingen is de volgende api beschikbaar:
   - **filesystem.load(path: pathlib.Path) -> dict[str: dict]**: Laad afspraken uit bestand 'path'. De functie moet ook controleren
-  dat alle afspraken compatibel zijn met de huidige API door middel van de compat-API. Afspraken die niet compatibel zijn moeten
+   dat alle afspraken compatibel zijn met de huidige API door middel van de compat-API. Afspraken die niet compatibel zijn moeten
   met behulp van dezelfde API worden aangepast. Als alle afspraken zijn aangepast EN er tenminste EEN afspraak is aangpast,
   moeten alle afspraken eerste opnieuw opgeslagen worden.
   - **filesystem.save(path: pathlib.Path, data: dict[str: dict]) -> None**: Sla afspraken 'data' op in bestand 'path'.
@@ -133,9 +133,9 @@ De prullenbak API bestaat uit de volgende functies:
   - **trash.clear_trash(expiration_time: datetime.timedelta=passed) -> None**: Verwijder alle afspraken die al `expiration_time` lang in 
   de prullenbak zitten. Als `expiration_time == -1` moeten alle afspraken die al geweest/verlopen zijn worden verwijderd.
   - **move_to_trash(uuid: str) -> None**: Verplaats een afspraak naar de prullenbak. Zet de globale variable `trash_history_id` gelijk
-  aan het gegeven uuid.
+  aan het gegeven uuid. Zet de "in_trash" attribute van de afspraak naar True en zet de "moved_to_trash" attribute naar de huidige tijd.
   - **move_from_trash(uuid: str) -> None**: Haal een afspraak uit de prullenbak. Als de gegeven uuid gelijk is aan `trash_history_id`,
-  moet deze globale variable naar `None` worden gezet.
+  moet deze globale variable naar `None` worden gezet. Zet de "in_trash" attribute van de afspraak naar False en zet de "moved_to_trash" attribute naar -1.
   - **[global variable via get_var]: trash_id: typing.Union[str, None]**: global variable met de uuid van de afspraak die
   als laatste naar de prullenbak is verplaatst.
   
