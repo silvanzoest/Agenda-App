@@ -4,8 +4,63 @@ Het heeft een aantal functies en dezen staat beschreven in de drive.
 
 <LICENSE>
 <COPYRIGHT NOTICE>
-<Animajosser>
+Animajosser <Animajosser@gmail.com>
 """
 __version__="0.0"
 __date__="09-04-2017"
+__Kivyversion__="1.10.0"
 ##############################################################################################
+
+# imports #
+
+# Most important
+print("Importing App")
+from kivy.app import App
+print("Importing config and disabling multitouch")
+from kivy.config import Config
+Config.set("input", "mouse", "mouse,disable_multitouch")
+print("Importing Window")
+from kivy.core.window import Window
+
+# Layouts
+print("Importing BoxLayout")
+from kivy.uix.boxlayout import BoxLayout
+print("Importing StackLayout")
+from kivy.uix.stacklayout import StackLayout
+
+# Attributes
+print("Importing Button")
+from kivy.uix.button import Button
+print("Importing TextInput")
+from kivy.uix.textinput import TextInput
+print("Importing CheckBox")
+from kivy.uix.checkbox import CheckBox
+print("Importing Label")
+from kivy.uix.label import Label
+
+# popups
+print("Importing Popup")
+from kivy.uix.popup import Popup
+
+# Classes
+
+class AgendaApp(App):
+    """Home class"""
+
+    icon = 'icon.ico'
+    title = '<Agenda App>'
+
+    def build(self):
+
+        Window.clearcolor=(1, 1, 1, 1)
+
+        self.parent = BoxLayout()
+
+        return self.parent
+
+
+
+# Script
+
+if __name__=='__main__':
+    AgendaApp().run()
