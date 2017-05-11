@@ -21,6 +21,8 @@ from kivy.config import Config
 Config.set("input", "mouse", "mouse,disable_multitouch")
 print("Importing Window")
 from kivy.core.window import Window
+print("Importing Builder")
+from kivy.lang.builder import Builder
 
 # Layouts
 print("Importing BoxLayout")
@@ -44,6 +46,9 @@ from kivy.uix.popup import Popup
 
 # Classes
 
+class BaseScreen(BoxLayout):
+    pass
+
 class AgendaApp(App):
     """Home class"""
 
@@ -54,9 +59,9 @@ class AgendaApp(App):
 
         Window.clearcolor=(1, 1, 1, 1)
 
-        self.parent = BoxLayout()
+        Builder.load_file('main_screen.kv')
 
-        return self.parent
+        return BaseScreen()
 
 
 
