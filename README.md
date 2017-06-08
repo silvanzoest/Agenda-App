@@ -30,9 +30,9 @@ Alle afspraken zijn opgeslagen in een global variable in de communiatie/core, on
 Dit is een dictionary waarin de keys de UUID (unieke identifier) van een afspraak is.
  De value die bij de key hoort is een dictionary met de data van de afspraak. 
 Op het moment heeft deze dictionary de volgende velden:
-  - title: "String met titel van de afspraak"
+  - "title": "String met titel van de afspraak"
   - "description": "String met een omschrijving van de afspraak"
-  - "where": "locatie"
+  - "where": "String met de locatie"
   - "from": int die aangeeft wanneer de afspraak begint (zie Unix timestam en datetime.fromtimestamp)
   - "to": int die aangeeft wanneer de afspraak afgelopen is. Is -1 als er geen eindtijd ingevuld is.
   - "repeat": bool die aangeeft of deze afspraak herhaald moet worden.
