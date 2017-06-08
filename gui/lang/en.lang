@@ -1,0 +1,20 @@
+# don't use "#", enters or | in the names, unless you use """-""" for several lines.
+topbar_file | File
+topbar_settings | Settings
+topbar_credits | Credits
+topbar_create_appointment | Create Appointment
+topbar_trash | Recycle Bin
+topbar_close | Close Program
+credits_popup_title | Credits
+
+# long text:
+credits_text | """
+Programmers: Jesse Maarleveld, Che Kruizinga, Sil van Zoest, Eli Saado, Tom Nagel, Thijmen Nawijn and Marten Praamsma
+This program has been written by students of the Willem Lodewijk Gymnasium of Groningen, The Netherlands
+
+We used the software:
+Python and Kivy
+
+Our software is released under the <LICENSE> License
+
+"""

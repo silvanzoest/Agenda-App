@@ -1,0 +1,175 @@
+# This is the kv file for the main screen
+# Het heeft een aantal functies en dezen staat beschreven in de drive.
+
+# <LICENSE>
+# <COPYRIGHT NOTICE>
+# Animajosser <Animajosser@gmail.com>
+
+# version: 0.1
+# date: 08-06-2017
+# kivyversion: 1.10.0
+
+########################################################################################################################
+
+# imports
+
+#:import lang get_lang.languages
+#:import exit_program exit_script.exit_procedure
+
+#:include credits.kv
+
+# variables
+
+#:set button_width_1 150
+#:set bar_height 25
+#:set bar_button_color (0, 0, 0, 1)
+#:set bar_button_backcolor (.9, .9, .9, 1)
+
+# screen
+
+<BaseScreen>:
+    # This is the main screen
+    canvas.before:
+        Color:
+            rgb: (1, 1, 1, 1)
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    orientation: "vertical"
+
+    BoxLayout:
+    # This is the top bar
+        canvas.before:
+            Color:
+                rgb: (.5, .5, .5, 1)
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        height: bar_height
+        size_hint: (1, None)
+        orientation: "horizontal"
+
+        Button:
+            # File
+            id: topbar_file
+            on_release: dropdown_file.open(self)
+            text: lang["topbar_file"]
+            color: bar_button_color
+            background_color: bar_button_backcolor
+            width: button_width_1
+            size_hint: (None, 1)
+            on_touch_down: app.start_measure_time()
+            on_touch_up: app.stop_measure_time()
+
+        DropDown:
+            # Dropdown for file
+            id: dropdown_file
+            size: (0,0)
+
+            Button:
+                # Account
+                id: topbar_something
+                text: "Something"
+                height: bar_height
+                size_hint: (1, None)
+                on_release: print("This button will eventually do something")
+
+            Button:
+                # Settings
+                id: topbar_settings
+                text: lang["topbar_settings"]
+                height: bar_height
+                size_hint: (1, None)
+                on_release: print("This button will eventually open the settings screen")
+
+            Button:
+                # Close
+                id: topbar_exit
+                text: lang["topbar_close"]
+                height: bar_height
+                size_hint: (1, None)
+                on_release: exit_program()
+
+        Button:
+            # Create appointment
+            id: topbar_create_appointment
+            text: lang["topbar_create_appointment"]
+            color: bar_button_color
+            background_color: bar_button_backcolor
+            width: button_width_1
+            size_hint: (None, 1)
+            on_release: print("This button will eventually open the create appointment screen")
+
+        Button:
+            # Trash
+            id: topbar_trash
+            text: lang["topbar_trash"]
+            color: bar_button_color
+            background_color: bar_button_backcolor
+            width: button_width_1
+            size_hint: (None, 1)
+            on_release: print("This button will eventually open the trash screen")
+
+        Button:
+            # Credits
+            id: topbar_credits
+            text: lang["topbar_credits"]
+            color: bar_button_color
+            background_color: bar_button_backcolor
+            width: button_width_1
+            size_hint: (None, 1)
+            on_release: root.creditspopup.open()
+
+    BoxLayout:
+        # This is the horizontal working area
+        canvas.before:
+            Color:
+                rgb: (.75, .75, .75, 1)
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        orientation: "horizontal"
+
+
+        BoxLayout:
+            # This is the vertical working area horizontal-left
+            canvas.before:
+                Color:
+                    rgb: (1, 1, 0, 1)
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+            orientation: "vertical"
+
+
+            Widget:
+                # This is the working area right-upper
+                size_hint: 1,1
+                canvas.before:
+                    Color:
+                        rgb: (0, 0, 1, 1)
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+
+
+            Widget:
+                # This is the working area right-lower
+                size_hint: 1,1
+                canvas.before:
+                    Color:
+                        rgb: (0, 1, 0, 1)
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+
+
+        Widget:
+            # This is the working area horizontal-right
+            size_hint: 1,1
+            canvas.before:
+                Color:
+                    rgb: (0, 1, 1, 1)
+                Rectangle:
+                    size: self.size
+                    pos: self.pos

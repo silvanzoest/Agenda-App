@@ -1,0 +1,20 @@
+# gebruik geen "#", enters of "|" in de tekst, tenzij u """-""" gebruikt voor meerdere regels.
+topbar_file | Bestand
+topbar_settings | Instellingen
+topbar_credits | Juridische Informatie
+topbar_create_appointment | Maak Afspraak
+topbar_trash | Prullenbak
+topbar_close | Sluit Programma
+credits_popup_title | Juridische Informatie
+
+# lange tekst
+credits_text | """
+Programmeurs: Jesse Maarleveld, Che Kruizinga, Sil van Zoest, Eli Saado, Tom Nagel, Thijmen Nawijn en Marten Praamsma
+Dit programma is geschreven door studenten van het Willem Lodewijk Gymnasium of Groningen, Nederland
+
+Wij gebruikten de software:
+Python and Kivy
+
+Onze software is uitgegeven onder de <LICENSE> licentie.
+
+"""
