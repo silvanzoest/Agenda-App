@@ -9,7 +9,7 @@ Animajosser <Animajosser@gmail.com>
 __version__="0.1"
 __date__="08-06-2017"
 __kivyversion__="1.10.0"
-__pythonversion__="3.5.0"
+__pythonversion__="3.5.2"
 ##############################################################################################
 
 # imports #
@@ -45,13 +45,20 @@ from kivy.uix.label import Label
 print("Importing Popup")
 from kivy.uix.popup import Popup
 
-print("Load kv File")
+# kv's
+print("Load kv File Home Screen")
 Builder.load_file('main_screen.kv')
+
+# python modules
 
 print("Importing Time")
 import time
+print("Importing subprocess")
+import subprocess
 
 # Classes #
+
+# Main widgets
 
 class CreditsPopup(Popup):
     pass
@@ -59,25 +66,35 @@ class CreditsPopup(Popup):
 class BaseScreen(BoxLayout):
     creditspopup=CreditsPopup()
 
+# Screens
+
 class AgendaApp(App):
-    """Home class"""
+    """Home class and home screen"""
 
     icon = 'icon.ico'
     title = 'Agenda App'
 
-    t0=False
+    def build(self):
+
+        return BaseScreen()
+
+    def open_app_crea_scr(self):
+        global AppointmentCreationScreen
+        # not tested yet
+        AppointmentCreationScreen = subprocess.Popen('python3 create_appointment.py', shell=True)
+
+    def close_app_crea_scr(self):
+        global AppointmentCreationScreen
+        AppointmentCreationScreen.kill()
+
+    # Easter Egg
+
+    t0 = False
     easter_egg = Popup(
         size_hint=(.75, .75), auto_dismiss=True,
         title="Pieter rookt peukjes",
         content=Label(text="Roken is heel ongezond\n Doo Da Doo Da"))
-
-    def build(self):
-
-        #Window.clearcolor=(1, 1, 1, 1)
-
-        return BaseScreen()
-
-    # The buttons are quite buggy, but I just had to make an easter egg
+    # This is quite buggy, but I just had to make an easter egg
     def start_measure_time(self):
         self.t0 = time.time()
     def stop_measure_time(self):
@@ -87,7 +104,6 @@ class AgendaApp(App):
             if time_used>=5:
                 self.easter_egg.open()
                 self.t0=False
-
 
 
 # Script

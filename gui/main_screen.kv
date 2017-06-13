@@ -22,8 +22,8 @@
 
 #:set button_width_1 150
 #:set bar_height 25
-#:set bar_button_color (0, 0, 0, 1)
-#:set bar_button_backcolor (.9, .9, .9, 1)
+#:set bar_button_color (1, 1, 1, 1)
+#:set bar_button_backcolor (.3, .3, .9, 1)
 
 # screen
 
@@ -41,7 +41,7 @@
     # This is the top bar
         canvas.before:
             Color:
-                rgb: (.5, .5, .5, 1)
+                rgb: (.25, .25, .5, 1)
             Rectangle:
                 size: self.size
                 pos: self.pos
@@ -67,10 +67,12 @@
             size: (0,0)
 
             Button:
-                # Account
+                # Something
                 id: topbar_something
                 text: "Something"
                 height: bar_height
+                color: bar_button_color
+                background_color: bar_button_backcolor
                 size_hint: (1, None)
                 on_release: print("This button will eventually do something")
 
@@ -78,7 +80,9 @@
                 # Settings
                 id: topbar_settings
                 text: lang["topbar_settings"]
+                background_color: bar_button_backcolor
                 height: bar_height
+                color: bar_button_color
                 size_hint: (1, None)
                 on_release: print("This button will eventually open the settings screen")
 
@@ -86,7 +90,9 @@
                 # Close
                 id: topbar_exit
                 text: lang["topbar_close"]
+                background_color: bar_button_backcolor
                 height: bar_height
+                color: bar_button_color
                 size_hint: (1, None)
                 on_release: exit_program()
 
@@ -98,7 +104,7 @@
             background_color: bar_button_backcolor
             width: button_width_1
             size_hint: (None, 1)
-            on_release: print("This button will eventually open the create appointment screen")
+            on_release: app.open_app_crea_scr()
 
         Button:
             # Trash

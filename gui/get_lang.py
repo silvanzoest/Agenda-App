@@ -30,6 +30,7 @@ needed_list=[
     "topbar_close",
     "credits_text",
     "credits_popup_title",
+    "topbar_close_screen",
 ]
 
 # functions

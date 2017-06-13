@@ -11,3 +11,140 @@
 
 ########################################################################################################################
 
+# imports
+
+#:import lang get_lang.languages
+
+#:include credits.kv
+
+# variables
+
+#:set button_width_1 150
+#:set bar_height 25
+#:set bar_button_color (1, 1, 1, 1)
+#:set bar_button_backcolor (.3, .3, .9, 1)
+
+# screen
+
+<AppointmentCreationScreen>:
+    # This is the main layout
+    canvas.before:
+        Color:
+            rgb: (1, 1, 1, 1)
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    orientation: "vertical"
+
+    BoxLayout:
+    # This is the top bar
+        canvas.before:
+            Color:
+                rgb: (.25, .25, .5, 1)
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        height: bar_height
+        size_hint: (1, None)
+        orientation: "horizontal"
+
+        Button:
+            # File
+            id: topbar_file
+            on_release: dropdown_file.open(self)
+            text: lang["topbar_file"]
+            color: bar_button_color
+            background_color: bar_button_backcolor
+            width: button_width_1
+            size_hint: (None, 1)
+            on_touch_down: app.start_measure_time()
+            on_touch_up: app.stop_measure_time()
+
+        DropDown:
+            # Dropdown for file
+            id: dropdown_file
+            size: (0,0)
+
+            Button:
+                # Something
+                id: topbar_something
+                text: "Something"
+                height: bar_height
+                color: bar_button_color
+                background_color: bar_button_backcolor
+                size_hint: (1, None)
+                on_release: print("This button will eventually do something")
+
+            Button:
+                # Close
+                id: topbar_exit
+                text: lang["topbar_close_screen"]
+                background_color: bar_button_backcolor
+                height: bar_height
+                color: bar_button_color
+                size_hint: (1, None)
+                on_release: close_window()
+
+        Button:
+            # Credits
+            id: topbar_credits
+            text: lang["topbar_credits"]
+            color: bar_button_color
+            background_color: bar_button_backcolor
+            width: button_width_1
+            size_hint: (None, 1)
+            on_release: root.creditspopup.open()
+
+    BoxLayout:
+        # This is the horizontal working area
+        canvas.before:
+            Color:
+                rgb: (.75, .75, .75, 1)
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        orientation: "horizontal"
+
+
+        BoxLayout:
+            # This is the vertical working area horizontal-left
+            canvas.before:
+                Color:
+                    rgb: (1, 1, 0, 1)
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+            orientation: "vertical"
+
+
+            Widget:
+                # This is the working area right-upper
+                size_hint: 1,1
+                canvas.before:
+                    Color:
+                        rgb: (0, 0, 1, 1)
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+
+
+            Widget:
+                # This is the working area right-lower
+                size_hint: 1,1
+                canvas.before:
+                    Color:
+                        rgb: (0, 1, 0, 1)
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+
+
+        Widget:
+            # This is the working area horizontal-right
+            size_hint: 1,1
+            canvas.before:
+                Color:
+                    rgb: (0, 1, 1, 1)
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
