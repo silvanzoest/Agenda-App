@@ -5,9 +5,11 @@
 
 
 def validate_appointment(data: dict):
-    KeyList = ['title', 'description', ...]
-    for key in KeyList:
+    KeyValDict = ['title': str, 'description': str,'where': str, 'from': int, "to": int, "repeat": bool, "repeat_interval": int}]
+    for key in KeyValDict:
         if key not in dict:
+            return False
+        if type(data[key]) != KeyValDict[key]:
             return False
         else:
             continue
