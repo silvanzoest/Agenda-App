@@ -39,7 +39,7 @@ def get_trash_items(sort_by: Sorting = Sorting.date_moved_to_trash) -> _t:
     if sort_by == Sorting.date:
         yield from sorted(_get_trash_items_raw().items(),
                           key=lambda app: app[0]['from'])
-    elif sort_by == Sorting.date:
+    elif sort_by == Sorting.date_reversed:
         yield from sorted(_get_trash_items_raw().items(),
                           key=lambda app: app[0]['from'],
                           reverse=True)
